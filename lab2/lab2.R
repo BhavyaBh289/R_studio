@@ -1,0 +1,18 @@
+f<-read.csv("travelled abroad_csv.csv")
+p<-sum(f$Travelledabroad == "Y")/nrow(f)
+cat("Probability of sucess:",p)
+per<-p*100
+cat("\npercentage of people travelled abroad:",per)
+d1<-dbinom(0:10,10,p)
+cat("\nProbablity for n=10:",d1)
+plot(0:10,d1,type="l")
+m<-100*p
+cat("\nMean in B.D:",m)
+sd1<-sqrt(100*p*(1-p))
+cat("\nstandard deviation in B.D:",sd1)
+p1<-pnorm(59,m,sd1,lower.tail = F)
+cat("\nProbabblity for n=100 bby NND:",p1)
+d2<-dbinom(0:100,100,p)
+plot(0:100,d2,type = "l")
+d3<-sum(dbinom(59:100,100,p))
+cat("\nProb for n =1 B.D:",d3)
