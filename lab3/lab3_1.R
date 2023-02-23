@@ -19,5 +19,4 @@ if(p<0.01){
 }else{
   cat ("\nclaim can not be rejected for 0.01")
 }
-#q =qnorm(0.05,m,sd) ## what can be the actual  would be  
-
+#q =qnorm(0.05,m,sd) ## what can be the actual value 
