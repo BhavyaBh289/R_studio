@@ -11,6 +11,11 @@ p <-pnorm(m,10000,se)
 cat ("\npvalue for the 1st case is :",p)
 if(p<0.05){
   cat ("\nclaim can be rejected for 0.05")
+  
+  
+  
+  
+  
 }else{
   cat ("\nclaim can not be rejected for 0.05")
 }
@@ -20,6 +25,10 @@ if(p<0.01){
   cat ("\nclaim can not be rejected for 0.01")
 }
 #q =qnorm(0.05,m,sd) ## what can be the actual value 
+
+
+
+
 #case 2 
 se <- 17/sqrt(35)
 cat ("\nfor second case \nStandard error is :",se)
