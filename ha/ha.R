@@ -4,10 +4,11 @@ library(caret)
 library(randomForest)
 library(dplyr)
 
+wine<-wine[ ,-c(1)]
 q<-ggcorr(wine, label = T)
 print(q)
 str(wine)
-wine<-wine[ ,-c(1,2,7)]
+wine<-wine[ ,-c(1,6)]
 wine$quality<-as.factor(wine$quality)
 
 set.seed(123)
@@ -57,3 +58,9 @@ print(nb_metrics)
 
 svm_metrics <- caret::confusionMatrix(svm_pred, test_data$quality)
 print(svm_metrics)
+
+
+
+H <- c(accuracy_nb*100,accuracy_rf*100,accuracy_svm*100)
+M <- c("Naive Bayes","Random Forest","SVM")
+barplot(H,names.arg=M,xlab="model",ylab="Accuracy",col="blue", main="Accuracy chart",border="red")
