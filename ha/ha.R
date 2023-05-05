@@ -2,7 +2,6 @@ wine<-read.csv("Wine Quality.csv")
 set.seed(123)
 library(caret)
 library(randomForest)
-library(dplyr)
 library(GGally)
 library(e1071)
 
@@ -13,15 +12,13 @@ print(q)
 wine<-wine[ ,-c(1,6)]
 wine$quality<-as.factor(wine$quality)
 
-set.seed(123)
-
 
 train <- sample(nrow(wine), 0.8 * nrow(wine))
 train_data <- wine[train, ]
 test_data <- wine[-train, ]
 
 #Random Forest 
-model <- randomForest(as.factor(quality) ~ ., data = train_data, ntree = 1000)
+model <- randomForest(quality ~ ., data = train_data, ntree = 1000)
 
 predictions <- predict(model, test_data)
 
@@ -43,7 +40,7 @@ accuracy_nb <- sum(diag(confusion_matrix)) / sum(confusion_matrix)
 # cat("\nAccuracy of Naive Bayes:", accuracy_nb, "\n")
 
 #SVM
-svm_model <- svm(quality ~ ., data = train_data, kernel = "linear", cost = 10)
+svm_model <- svm(quality ~ ., data = train_data, kernel = "polynomial", cost = 10)
 
 svm_pred <- predict(svm_model, newdata = test_data)
 
@@ -53,7 +50,7 @@ accuracy_svm <- sum(diag(svm_cm)) / sum(svm_cm)
 # cat("\nAccuracy of SVM: ",accuracy_svm)
 
 H <- c(accuracy_nb*100,accuracy_svm*100,accuracy_rf*100)
-M <- c("Naive Bayes","SVM","Random Forest")
+M <- c(paste("Naive Bayes ", accuracy_nb*100,"%"),paste("SVM ", accuracy_svm*100,"%"),paste("Random Forest ", accuracy_rf*100,"%"))
 barplot(H,names.arg=M,xlab="model",ylab="Accuracy",col="blue", main="Accuracy chart",border="red")
 
 rf_metrics <- caret::confusionMatrix(predictions, test_data$quality)
@@ -64,3 +61,4 @@ print(nb_metrics)
 
 svm_metrics <- caret::confusionMatrix(svm_pred, test_data$quality)
 print(svm_metrics)
+
